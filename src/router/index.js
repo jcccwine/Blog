@@ -18,6 +18,7 @@ const router = new Router({
         {path: '/articles/create', component: ArticleCreate},
         {path: '/articles/list', component: ArticleList},
         {path: '/tags/create', component: TagCreate},
+        {path: '/tags/edit/:id', component: TagCreate, props: true},
         {path: '/tags/list', component: TagList},
       ]
     

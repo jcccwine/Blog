@@ -1,5 +1,5 @@
 // 创建数据库，数据库连接，
-module.exports = app=> {
+module.exports = app => {
   const mongoose = require('mongoose')
   mongoose.connect('mongodb://127.0.0.1:27017/blog',{
     useNewUrlParser: true, useUnifiedTopology: true 
