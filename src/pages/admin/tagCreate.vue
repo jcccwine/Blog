@@ -34,7 +34,15 @@ export default {
         type: 'success',
         message: '保存成功'
       })
+      this.$router.push('/tags/list')
+    },
+    async fetch() {
+      const res = await this.$http.get(`/tags/${this.id}`)
+      this.model = res.data
     }
+  },
+  created(){
+    this.fetch()
   }
 }
 </script>
