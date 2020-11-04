@@ -6,7 +6,7 @@
       <el-table-column prop="name" label="标签名"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <!-- scope.row当前这一行的数据 跳转到categories/edit/${scope.row._id}这个页面-->
+          <!-- scope.row当前这一行的数据 跳转到tags/edit/${scope.row._id}这个页面-->
           <el-button type="text" width="180" 
           @click="$router.push(`/tags/edit/${scope.row._id}`)">编辑</el-button>
           <el-button type="text" width="180" 
@@ -36,7 +36,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async()=> {
-        await this.$http.delete(`/tags/${row._id}`)
+        await this.$http.delete(`/tags/list/${row._id}`)
         this.$message({
           type: 'success',
           message: '删除成功'

@@ -16,17 +16,17 @@ module.exports = app => {
     res.send(model)
   })
   // 编辑标签名称
-  router.get('/tags/:id',async(req,res)=>{
+  router.get('/tags/edit/:id',async(req,res)=>{
     const model = await Tag.findById(req.params.id)
     res.send(model)
   })
   // 编辑再保存
-  router.put('/tags/:id', async(req, res) => {
+  router.put('/tags/edit/:id', async(req, res) => {
     const model = await Tag.findByIdAndUpdate(req.params.id, req.body)
     res.send(model)
   })
   // 删除标签
-  router.delete('/tags/:id', async(req, res) => {
+  router.delete('/tags/list/:id', async(req, res) => {
     await Tag.findByIdAndDelete(req.params.id, req.body)
     res.send({
       success: true

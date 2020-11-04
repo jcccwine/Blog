@@ -25,7 +25,7 @@ export default {
   methods: {
     async save() {
       if (this.id) {
-        await this.$http.put(`/tags/${this.id}`, this.model)
+        await this.$http.put(`/tags/edit/${this.id}`, this.model)
       }
       else {
         await this.$http.post('/tags', this.model)
@@ -37,12 +37,13 @@ export default {
       this.$router.push('/tags/list')
     },
     async fetch() {
-      const res = await this.$http.get(`/tags/${this.id}`)
+      // 编辑时出现在input框里的标签名
+      const res = await this.$http.get(`/tags/edit/${this.id}`)
       this.model = res.data
     }
   },
   created(){
-    this.fetch()
+    this.id && this.fetch()
   }
 }
 </script>
