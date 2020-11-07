@@ -4,15 +4,15 @@ const schema = new mongoose.Schema({
   title: {
     type: String
   },
-  body: {
+  pic: {
     type: String
   },
-  time: {
-    type: Date
-  },
   tags: {
+    type: mongoose.SchemaTypes.ObjectId, ref: 'Tag',
+  },
+  body: {
     type: String
   }
 })
 
-module.exports = mongoose.model('Blog',schema)
+module.exports = mongoose.model('Article',schema)

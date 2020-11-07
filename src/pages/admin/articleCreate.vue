@@ -1,22 +1,139 @@
 <template>
   <div class="blogContent">
-    <!-- <h1>{{id ? '编辑':'新增'}}</h1>
-    <el-form label-width="120px" @submit.native.prevent="save">
-      <el-form-item label="上级分类">
-        <el-select v-model="model.categories" multiple >
-          <el-option v-for="item in categories" :key="item._id"
-                  :label="item.name" :value="item._id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="标题">
+    <el-form 
+    :model="model"
+    :rules="rules" 
+    ref="model" 
+    @submit.native.prevent="save" 
+    label-width="80px" 
+    class="demo-ruleForm">
+      <el-form-item label="标题" style="width: 500px, margin-bottom: 20px" prop="title">
         <el-input v-model="model.title"></el-input>
       </el-form-item>
-      <el-form-item label="详情">
-        <vue-editor v-model="model.body" useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
+      <el-form-item label="封面" prop="pic">
+        <!-- action: 上传的接口地址 -->
+        <el-upload
+          class="avatar-uploader"
+          action="$http.default.baseURL + '/upload'" 
+          :show-file-list="false"
+          :on-success="afterUpload">
+          <img v-if="model.pic" :src="model.pic" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="标签" prop="tags">
+        <el-select v-model="model.tags" multiple>
+          <el-option 
+          v-for="item in tags" 
+          :key="item._id" 
+          :label="item.name" 
+          :value="item._id"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="内容" prop="body">
+        <!-- useCustomImageHandler:处理图像上传，不是默认的base64 -->
+        <!-- <vue-editor v-model="model.body" useCustomImageHandler @image-added="handleImageAdded"></vue-editor> -->
+        <mavon-editor v-model="model.body" style="height: 800px"></mavon-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
       </el-form-item>
-    </el-form> -->
+    </el-form>
   </div>
 </template>
+
+<script>
+import {mavonEditor} from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+export default {
+  components: {
+    mavonEditor
+  },
+  props: {
+    id: {}
+  },
+  data(){
+    return {
+      model: {},
+      tags: [],
+      rules: {
+        title: [
+          {required: true, message: '请输入标题', trigger: 'blur'}
+        ],
+        pic: [
+          {required: true, message: '请选择图片', trigger: 'change'}
+        ],
+        tags: [
+          {required: true, message: '请选择标签', trigger: 'change'}
+        ],
+        body: [
+          {required: true, message: '请输入文章内容', trigger: 'blur'}
+        ],
+      }
+    }
+  },
+  methods: {
+    afterUpload(){
+
+    },
+    async save() {
+      if (this.id) { 
+        await this.$http.put(`/articles/edit/${this.id}`, this.model)
+      }
+      else {
+        await this.$http.post('/articles', this.model)
+        console.log(this.model);
+      }
+      this.$message({
+        type: 'success',
+        message: '保存成功'
+      })
+      this.$router.push('/articles/list')
+    },
+    // 获取tag内容
+    async fetchGetTags() {
+      const res = await this.$http.get('/tags')
+      this.tags = res.data
+      console.log(this.tags, 'tags');
+    }
+  },
+  created() {
+    this.fetchGetTags()
+  },
+}
+</script>
+
+<style scope>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .el-form-item__error {
+    font-size: 13px;
+  }
+  .el-form-item {
+    margin-bottom: 30px;
+  }
+  .el-form-item__content {
+    line-height: 30px;
+  }
+</style>

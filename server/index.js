@@ -9,6 +9,9 @@ app.use(require('cors')())
 require('./plugin/db.js')(app)
 require('./routers/admin/index.js')(app)
 
+// 静态资源托管
+app.use('/uploads', express.static(__dirname+'/upload'))
+
 app.listen(3000, ()=>{
   console.log('服务器启动成功');
 })

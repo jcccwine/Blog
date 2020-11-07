@@ -1,21 +1,29 @@
 <template>
   <el-container style="height: 100vh">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu router :default-openeds="['1']" unique-opened :default-active="this.$router.path">
+      <el-menu router unique-opened :default-active="this.$router.path">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>文章管理</template>
+          <template slot="title"><i class="el-icon-message"></i>Home</template>
           <el-menu-item-group>
+            <el-menu-item index="#">首页</el-menu-item>
+            <!-- <el-menu-item index="/articles/list">文章列表</el-menu-item> -->
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-message"></i>内容管理</template>
+          <el-menu-item-group>
+            <el-menu-item index="/tags/tagsinit">标签列表</el-menu-item>
             <el-menu-item index="/articles/create">新建文章</el-menu-item>
             <el-menu-item index="/articles/list">文章列表</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="2">
+        <!-- <el-submenu index="3">
           <template slot="title"><i class="el-icon-message"></i>标签管理</template>
           <el-menu-item-group>
             <el-menu-item index="/tags/create">新建标签</el-menu-item>
             <el-menu-item index="/tags/list">标签列表</el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-message"></i>全局管理</template>
           <el-menu-item-group>
@@ -56,6 +64,7 @@
     line-height: 60px;
   }
   .el-aside {
+    margin-top: 60px;
     color: #333;
   }
 </style>

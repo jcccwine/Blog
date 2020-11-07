@@ -4,7 +4,7 @@ import Home from '../pages/admin/home.vue'
 import ArticleCreate from '../pages/admin/articleCreate.vue'
 import ArticleList from '../pages/admin/articleList.vue'
 import TagCreate from '../pages/admin/tagCreate.vue'
-import TagList from '../pages/admin/tagList.vue'
+import Tags from '../pages/admin/tags.vue'
 
 Vue.use(Router)
 
@@ -15,11 +15,11 @@ const router = new Router({
       path: '/', 
       component: Home,
       children: [
-        {path: '/articles/create', component: ArticleCreate},
+        {path: '/articles/create', component: ArticleCreate, props: true},
         {path: '/articles/list', component: ArticleList},
         {path: '/tags/create', component: TagCreate},
         {path: '/tags/edit/:id', component: TagCreate, props: true},
-        {path: '/tags/list', component: TagList},
+        {path: '/tags/tagsinit', component: Tags},
       ]
     
     }
