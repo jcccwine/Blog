@@ -23,23 +23,23 @@
         <template slot-scope="scope">
           <!-- scope.row当前这一行的数据 跳转到tags/edit/${scope.row._id}这个页面-->
           <el-button type="text" width="180" 
-          @click="dialogVisible = true">编辑</el-button>
+          @click="edit(scope.row._id)">编辑</el-button>
           <el-dialog
             title="编辑"
-            :visible.sync="dialogVisible"
+            :visible.sync="dialogVisibleEdit"
             width="30%"
             @close='closeDialog'>
             <el-form>
               <el-form-item label="ID">
-                <el-input v-model="modelEdit._id"></el-input>
+                <el-input v-model="modelEdit._id" disabled></el-input>
               </el-form-item>
               <el-form-item label="标签名">
                 <el-input v-model="modelEdit.name"></el-input>
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="save">保 存</el-button>
+              <el-button @click="dialogVisibleEdit = false">取 消</el-button>
+              <el-button type="primary" @click="saveEdit(modelEdit._id)">保 存</el-button>
             </span>
           </el-dialog>
           <el-button type="text" width="180" 
@@ -58,9 +58,11 @@ export default {
   data() {
     return {
       model: {},  //存放创建标签
-      modelEdit: {},
+      modelEdit: {},  // 存放编辑标签时获取的标签内容
       tags: [], // 存放显示标签
-      dialogVisible: false
+      dialogVisible: false,
+      dialogVisibleEdit: false,
+      disable: true // input框禁止输入
     }
   },
   methods: {
@@ -68,12 +70,7 @@ export default {
       this.model.name = ''
     },
     async save(){
-      if (this.id) {
-        await this.$http.put(`/tags/edit/${this.id}`, this.model)
-      }
-      else {
-        await this.$http.post('/tags', this.model)
-      }
+      await this.$http.post('/tags', this.model)
       this.$message({
         type: 'success',
         message: '保存成功'
@@ -85,11 +82,19 @@ export default {
       const res = await this.$http.get('/tags')
       this.tags = res.data
     },
-    async fetchEdit() {
-      const res = await this.$http.get(`/tags/edit/${this.id}`)
+    async edit(rowId) {
+      const res = await this.$http.get(`/tags/edit/${rowId}`)
       this.modelEdit = res.data
-      console.log(this.modelEdit);
-      console.log(res.data);
+      this.dialogVisibleEdit = true
+    },
+    async saveEdit(rowId) {
+      await this.$http.put(`/tags/edit/${rowId}`, this.modelEdit)
+      this.fetch()
+      this.dialogVisibleEdit = false
+      this.$message({
+        type: 'success',
+        message: '修改成功'
+      })
     },
     async remove(row){
       // 引入elementUI会给vue添加全局方法，$confirm(message, title, options)

@@ -4,9 +4,13 @@
     <el-table :data="articles">
       <el-table-column prop="_id" label="ID"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="pic" label="封面"></el-table-column>
-      <el-table-column prop="tags" label="标签"></el-table-column>
-      <el-table-column fixed="right" label="操作">
+      <el-table-column prop="pic" label="封面">
+        <template slot-scope="scope">
+          <img :src="scope.row.pic" alt="" style="height: 50px">
+        </template>
+      </el-table-column>
+      <el-table-column prop="tags.name" label="标签"></el-table-column>
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <!-- scope.row当前这一行的数据 跳转到tags/edit/${scope.row._id}这个页面-->
           <el-button type="text" width="180" 
@@ -30,6 +34,7 @@ export default {
     async fetch() {
       const res = await this.$http.get('/articles')
       this.articles = res.data
+      console.log(this.articles);
     },
     async remove(row){
       // 引入elementUI会给vue添加全局方法，$confirm(message, title, options)

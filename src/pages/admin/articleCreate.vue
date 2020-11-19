@@ -7,14 +7,14 @@
     @submit.native.prevent="save" 
     label-width="80px" 
     class="demo-ruleForm">
-      <el-form-item label="标题" style="width: 500px, margin-bottom: 20px" prop="title">
-        <el-input v-model="model.title"></el-input>
+      <el-form-item label="标题" style="margin-bottom: 20px" prop="title">
+        <el-input style="width: 300px" placeholder="请输入文章标题" v-model="model.title"></el-input>
       </el-form-item>
       <el-form-item label="封面" prop="pic">
         <!-- action: 上传的接口地址 -->
         <el-upload
           class="avatar-uploader"
-          action="$http.default.baseURL + '/upload'" 
+          action="http://localhost:3000/admin/uploads" 
           :show-file-list="false"
           :on-success="afterUpload">
           <img v-if="model.pic" :src="model.pic" class="avatar">
@@ -22,7 +22,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="标签" prop="tags">
-        <el-select v-model="model.tags" multiple>
+        <el-select v-model="model.tags" multiple placeholder="请选择文章标签">
           <el-option 
           v-for="item in tags" 
           :key="item._id" 
@@ -31,8 +31,6 @@
         </el-select>
       </el-form-item>
       <el-form-item label="内容" prop="body">
-        <!-- useCustomImageHandler:处理图像上传，不是默认的base64 -->
-        <!-- <vue-editor v-model="model.body" useCustomImageHandler @image-added="handleImageAdded"></vue-editor> -->
         <mavon-editor v-model="model.body" style="height: 800px"></mavon-editor>
       </el-form-item>
       <el-form-item>
@@ -45,6 +43,7 @@
 <script>
 import {mavonEditor} from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+// import {uploadUrl} from '../../api/mixin.js'
 export default {
   components: {
     mavonEditor
@@ -73,8 +72,9 @@ export default {
     }
   },
   methods: {
-    afterUpload(){
-
+    afterUpload(res){
+      this.$set(this.model, 'pic', res.url)
+      console.log(this.model);
     },
     async save() {
       if (this.id) { 
@@ -95,10 +95,16 @@ export default {
       const res = await this.$http.get('/tags')
       this.tags = res.data
       console.log(this.tags, 'tags');
+    },
+    async fetch(){
+      const res = await this.$http.get(`/articles/edit/${this.id}`)
+      this.model = res.data
+      console.log(this.model);
     }
   },
   created() {
     this.fetchGetTags()
+    this.id && this.fetch()
   },
 }
 </script>

@@ -45,7 +45,23 @@ module.exports = app => {
     const model = await Article.find().limit(10)
     res.send(model)
   })
-  
+  // 编辑页面获取文章内容接口
+  router.get('/articles/edit/:id', async(req, res) => {
+    const model = await Article.findById(req.params.id)
+    res.send(model)
+  })
+  // 删除文章
+  router.delete('/articles/list/:id', async(req, res) => {
+    await Article.findByIdAndDelete(req.params.id, req.body)
+    res.send({
+      success: true
+    })
+  })
+  // 编辑文章再保存
+  router.put('/articles/edit/:id', async(req, res) => {
+    const model = await Article.findByIdAndUpdate(req.params.id, req.body)
+    res.send(model)
+  })
 
   // 将路由挂载到实例下，第一个参数是路由的前半部分地址
   app.use('/admin', router)

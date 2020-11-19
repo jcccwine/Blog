@@ -7,9 +7,9 @@ const schema = new mongoose.Schema({
   pic: {
     type: String
   },
-  tags: {
+  tags: [{
     type: mongoose.SchemaTypes.ObjectId, ref: 'Tag',
-  },
+  }],
   body: {
     type: String
   }
