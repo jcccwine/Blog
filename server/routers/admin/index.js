@@ -42,7 +42,7 @@ module.exports = app => {
   })
   // 获取文章列表接口
   router.get('/articles', async(req, res) => {
-    const model = await Article.find().limit(10)
+    const model = await Article.find().populate("tags", "name").limit(10)
     res.send(model)
   })
   // 编辑页面获取文章内容接口

@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100vh">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu router unique-opened :default-active="this.$router.path">
+      <el-menu router unique-opened :default-active="$router.path">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>Home</template>
           <el-menu-item-group>
@@ -17,13 +17,6 @@
             <el-menu-item index="/articles/list">文章列表</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <!-- <el-submenu index="3">
-          <template slot="title"><i class="el-icon-message"></i>标签管理</template>
-          <el-menu-item-group>
-            <el-menu-item index="/tags/create">新建标签</el-menu-item>
-            <el-menu-item index="/tags/list">标签列表</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu> -->
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-message"></i>全局管理</template>
           <el-menu-item-group>
@@ -48,11 +41,29 @@
       
       <el-main>
         <!-- 路由容器 -->
-        <router-view :key="this.$router.path"></router-view>
+        <router-view :key="$route.path"></router-view>
       </el-main>
     </el-container>
   </el-container>
 </template>
+
+<script>
+export default {
+  // beforeRouteUpdate(to, from, next) {
+  //   next()
+  // }
+  methods: {
+    reload(){
+      
+    }
+  },
+  watch: {
+    '$router'(to, from) {
+      
+    }
+  },
+}
+</script>
 
 <style scope>
   * {

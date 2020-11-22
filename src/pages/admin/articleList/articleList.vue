@@ -2,14 +2,18 @@
   <div class="TagList">
     <h3>文章列表</h3>
     <el-table :data="articles">
-      <el-table-column prop="_id" label="ID"></el-table-column>
+      <el-table-column prop="_id" label="文章ID"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
       <el-table-column prop="pic" label="封面">
         <template slot-scope="scope">
           <img :src="scope.row.pic" alt="" style="height: 50px">
         </template>
       </el-table-column>
-      <el-table-column prop="tags.name" label="标签"></el-table-column>
+      <el-table-column prop="tags" label="标签">
+        <template slot-scope="scope">
+          <span v-for="(item, index) in scope.row.tags" :key="index" class="tag-span">{{ item.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <!-- scope.row当前这一行的数据 跳转到tags/edit/${scope.row._id}这个页面-->
@@ -57,3 +61,14 @@ export default {
   }
 }
 </script>
+
+<style scope>
+  .tag-span {
+    display: inline-block;
+    border: 1px solid #d9d9d9;
+    background-color: #fafafa;
+    margin: 0 8px 5px 0;
+    border-radius: 4px;
+    padding: 0 7px;
+  }
+</style>

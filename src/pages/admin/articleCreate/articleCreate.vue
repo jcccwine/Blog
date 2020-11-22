@@ -31,10 +31,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="内容" prop="body">
-        <mavon-editor v-model="model.body" style="height: 800px"></mavon-editor>
+        <mavon-editor v-model="model.body" style="height: 800px; z-index: 0"></mavon-editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit">保存</el-button>
+        <el-button class="el-btn" native-type="submit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -43,7 +43,6 @@
 <script>
 import {mavonEditor} from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-// import {uploadUrl} from '../../api/mixin.js'
 export default {
   components: {
     mavonEditor
@@ -82,7 +81,6 @@ export default {
       }
       else {
         await this.$http.post('/articles', this.model)
-        console.log(this.model);
       }
       this.$message({
         type: 'success',
@@ -106,6 +104,7 @@ export default {
     this.fetchGetTags()
     this.id && this.fetch()
   },
+
 }
 </script>
 
@@ -141,5 +140,12 @@ export default {
   }
   .el-form-item__content {
     line-height: 30px;
+  }
+  .el-btn {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1;
+    width: 100px;
   }
 </style>
