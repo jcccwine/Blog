@@ -49,19 +49,6 @@
 
 <script>
 export default {
-  // beforeRouteUpdate(to, from, next) {
-  //   next()
-  // }
-  methods: {
-    reload(){
-      
-    }
-  },
-  watch: {
-    '$router'(to, from) {
-      
-    }
-  },
 }
 </script>
 
@@ -80,10 +67,3 @@ export default {
   }
 </style>
 
-<script>
-  export default {
-    data() {
-      
-    }
-  };
-</script>
