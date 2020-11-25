@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="header">
+  <div class="header">
+    <div class="container">
       <img src="" alt="">
       <div class="nav">
         <router-link 
@@ -14,7 +14,7 @@
         ><i></i>{{ item.name }}</router-link>
       </div>
       <div class="search">
-
+        <input type="text" placeholder="请输入搜索内容" class="header-input"><i></i>
       </div>
     </div>
   </div>
@@ -34,13 +34,13 @@ export default {
 </script>
 
 <style scope>
-  .container {
+  .header {
     width: 100%;
     height: 60px;
     background-color: #222222;
     box-shadow: 0 10px 10px 10px #eee;
   }
-  .header {
+  .header .container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -61,5 +61,10 @@ export default {
   }
   .active {
     background-color: beige;
+  }
+  .header-input {
+    background-color: #222222;
+    color: #bbb;
+    font-size: 16px;
   }
 </style>
