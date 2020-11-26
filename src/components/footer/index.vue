@@ -15,8 +15,6 @@ export default {
   width: 100%;
   height: 100px;
   background-color: #222;
-  position: fixed;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

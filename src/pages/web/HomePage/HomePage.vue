@@ -1,6 +1,6 @@
 <template>
   <div class="homePage">
-    <article-list></article-list>
+    <article-list :articleData="articleData"></article-list>
   </div>
 </template>
 
@@ -9,13 +9,28 @@ import ArticleList from '../../../components/articleList/index'
 export default {
   components: {
     'article-list': ArticleList
-  }
+  },
+  data() {
+    return {
+      articleData: []
+    }
+  },
+  created() {
+    this.getArticleList()
+  },
+  methods: {
+    async getArticleList() {
+      const res = await this.$http.get('/articles')
+      this.articleData = res.data
+      console.log(res.data);
+    }
+  },
 }
 </script>
 
 <style scope>
   .homePage {
-    width: 100%;
     background-color: #eeeded;
+    padding: 20px;
   }
 </style>

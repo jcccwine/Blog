@@ -1,21 +1,26 @@
 <template>
-  <div class="article">
-    <div class="container">
+  <div class="container">
+    <div class="article"  v-for="(item, index) in articleData" :key="index">
       <div class="content">
-        <div class="title"><h3>2021秋招总结</h3></div>
-        <div class="tags"><span>html</span></div>
+        <div class="title"><h3>{{ item.title }}</h3></div>
+        <span v-for="(tag, index) in item.tags" :key="index">{{ tag.name }}</span>
+        <div class="description">终于开评论啦啦啦啦啦啦啦啦啦</div>
         <div class="time">2020-11-25</div>
       </div>
-      <img src="" alt="">
+      <div class="images">
+        <img :src="item.pic" alt="">
+      </div>
     </div>
-    
   </div>
+  
 </template>
 
 <script>
 export default {
   props: {
-
+    articleData: {
+      type: Array
+    }
   }
 }
 </script>
@@ -23,38 +28,50 @@ export default {
 <style scope>
 .article {
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  /* align-items: center; */
-  
-}
-.article .container {
-  width: 75%;
-  height: 43%;
+  justify-content: space-between;
+  width: 65%;
+  height: 250px;
+  padding: 10px;
   background-color: #fff;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 10px auto;
 }
-.article .container:hover {
+.article:hover {
   box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.1);
 }
 .content {
-  padding: 40px 30px;
+  padding: 20px;
+  flex: 1.2;
 }
 .title {
   font-size: 25px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
-.tags {
-  margin: 25px 0;
-}
-.tags span {
+.article span {
   display: inline-block;
-  padding: 10px;
+  padding: 7px 5px;
+  margin: 5px;
   background-color: beige;
   border-radius: 5px;
   font-size: 15px;
   color: #bbb;
+}
+.description {
+  font-size: 17px;
+  margin: 20px 0;
+}
+.time {
+  font-size: 13px;
+}
+.images {
+  flex: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
