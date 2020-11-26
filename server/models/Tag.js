@@ -4,6 +4,9 @@ const schema = new mongoose.Schema({
   name: {
     type: String,
     required: true
+  },
+  num: {
+    type: Number
   }
 })
 

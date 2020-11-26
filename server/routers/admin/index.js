@@ -1,6 +1,7 @@
 module.exports = app => {
   const express = require('express')
   const multer = require('multer')  // 处理form-data数据
+  const mongoose = require('mongoose')
   const Tag = require('../../models/Tag.js')
   const Article = require('../../models/Article.js')
   // 相当于是路由的分支
@@ -62,6 +63,26 @@ module.exports = app => {
     const model = await Article.findByIdAndUpdate(req.params.id, req.body)
     res.send(model)
   })
+  // 通过标签id查找对应的文章
+  router.get('/tags/:id', async(req, res) => {
+    // 聚合查询
+    const model = await Tag.aggregate([
+      { 
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'articles',
+          localField: '_id',
+          foreignField: 'tags',
+          as: 'articlesList'
+        }
+      },
+    ])
+    res.send(model)
+  })
 
   // 将路由挂载到实例下，第一个参数是路由的前半部分地址
   app.use('/admin', router)
@@ -74,5 +95,4 @@ module.exports = app => {
     file.url = `http://localhost:3000/uploads/${file.filename}`
     res.send(file)
   })
-
 }

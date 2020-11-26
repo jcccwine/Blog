@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="article"  v-for="(item, index) in articleData" :key="index">
+    <div class="article" @click="$route.path" v-for="(item, index) in articleData" :key="index">
       <div class="content">
         <div class="title"><h3>{{ item.title }}</h3></div>
         <span v-for="(tag, index) in item.tags" :key="index">{{ tag.name }}</span>
-        <div class="description">终于开评论啦啦啦啦啦啦啦啦啦</div>
+        <div class="description">终于</div>
         <div class="time">2020-11-25</div>
       </div>
       <div class="images">

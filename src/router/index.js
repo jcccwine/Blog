@@ -7,6 +7,7 @@ import Tags from '../pages/admin/tags/tags.vue'
 
 import webHome from '../pages/web/home.vue'
 import HomePage from '../pages/web/HomePage/HomePage.vue'
+import Tag from '../pages/web/Tag/Tag.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -27,8 +28,8 @@ const router = new Router({
       component: webHome,
       props: true,
       children: [
-        {path: '/blog', component: HomePage},
-        {path: 'file', component: HomePage},
+        {path: '/blog', component: HomePage, props: true},
+        {path: 'span', component: Tag},
       ]
     }
   ]
